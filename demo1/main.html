@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Main Page</title>
+</head>
+
+<body>
+    <h1>This is Main Page</h1>
+    <ul>
+        <li id="toA">open Page A</li>
+        <li id="toB">open Page B</li>
+    </ul>
+
+    <script>
+        var windowRefs = {}
+        var linkA = document.getElementById('toA')
+        var linkB = document.getElementById('toB')
+
+        linkA.addEventListener('click', function () {
+            openPopup('a.html', 'pageA')
+        })
+
+        linkB.addEventListener('click', function () {
+            openPopup('b.html', 'pageB')
+        })
+
+        function openPopup(url, name) {
+            if (windowRefs[name] == null || windowRefs[name].closed) {
+                windowRefs[name] = window.open(url, name, "popup")
+            }
+            else {
+                windowRefs[name].focus()
+            }
+        }
+
+        window.addEventListener('message', function (event) {
+            let data = event.data
+            if (data.type === 'focus') {
+                windowRefs[data.source].blur()
+                windowRefs[data.target].focus()
+            }
+        })
+    </script>
+</body>
+
+</html>

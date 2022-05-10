@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page B</title>
+    </head>
+    <body>
+        <h1 style="color: blue;">This is Page B</h1>
+        <ul>
+            <li id="toA">open Page A</li>
+        </ul>
+
+        <script>
+            var windowRefs = {}
+            var linkA = document.getElementById('toA')
+
+            linkA.addEventListener('click', function () {
+                openPopup('a.html', 'pageA')
+            })
+    
+            function openPopup(url, name) {
+                if (windowRefs[name] == null || windowRefs[name].closed) {
+                    if (window.opener) {
+                        window.blur()
+                        window.opener.postMessage({ type: 'focus', source: 'pageB', target: name }, '*')
+                    } else {
+                        windowRefs[name] = window.open(url, name, "popup")
+                    }
+                }
+                else {
+                    windowRefs[name].focus()
+                }
+            }
+
+            window.addEventListener('message', function (event) {
+                console.log('PageB get event :>> ', event);
+            })
+        </script>
+    </body>
+</html>
