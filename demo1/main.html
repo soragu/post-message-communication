@@ -26,6 +26,7 @@
         })
 
         function openPopup(url, name, source) {
+            window.blur()
             if (windowRefs[name] == null || windowRefs[name].closed) {
                 windowRefs[name] = window.open(url, name, "popup")
             }
