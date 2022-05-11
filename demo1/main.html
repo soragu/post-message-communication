@@ -25,11 +25,12 @@
             openPopup('b.html', 'pageB')
         })
 
-        function openPopup(url, name) {
+        function openPopup(url, name, source) {
             if (windowRefs[name] == null || windowRefs[name].closed) {
                 windowRefs[name] = window.open(url, name, "popup")
             }
             else {
+                windowRefs[source] && windowRefs[source].blur()
                 windowRefs[name].focus()
             }
         }
@@ -39,6 +40,9 @@
             if (data.type === 'focus') {
                 windowRefs[data.source].blur()
                 windowRefs[data.target].focus()
+            }
+            if (data.type === 'open') {
+                openPopup(data.url, data.target)
             }
         })
     </script>
