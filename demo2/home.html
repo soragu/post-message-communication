@@ -16,7 +16,7 @@
       <div>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">Eixt</a>
+            <a id="exit-menu-item" class="nav-link" href="#">Eixt</a>
           </li>
           <li class="nav-item">
             <a id="non-mro-menu-item" class="nav-link" href="#">Non-MRO</a>
@@ -81,6 +81,7 @@
   window.name = 'home'
   const windowRefs = {}
 
+  let exitMenuItem = document.getElementById('exit-menu-item')
   let nonMROMenuItem = document.getElementById('non-mro-menu-item')
   let otherMenuItem = document.getElementById('other-item-menu-item')
 
@@ -90,8 +91,11 @@
   let nonMROGroup = document.getElementById('non-mro-group')
   let otherGroup = document.getElementById('other-group')
 
-  nonMROMenuItem.addEventListener('click', function() {
+  exitMenuItem.addEventListener('click', function() {
+    window.close()
+  })
 
+  nonMROMenuItem.addEventListener('click', function() {
     showNavCard(nonMROCard)
   })
 
