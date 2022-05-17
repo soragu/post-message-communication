@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home Page</title>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+
+<body>
+    <header class="d-flex justify-content-start py-3">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a id="non-mro" href="#" class="nav-link" aria-current="page">non-MRO</a>
+        </li>
+        <li class="nav-item">
+            <a id="other" href="#" class="nav-link">Other</a>
+        </li>
+      </ul>
+    </header>
+
+    <script>
+        window.name = 'home'
+        const windowRefs = {}
+        let nonMROLink = document.getElementById('non-mro')
+        let otherLink = document.getElementById('other')
+
+        nonMROLink.addEventListener('click', function () {
+            openPopup('non-mro.html', 'nonMRO')
+        })
+
+        otherLink.addEventListener('click', function () {
+            openPopup('other.html', 'other')
+        })
+
+        function openPopup(url, name) {
+            if (windowRefs[name] == null || windowRefs[name].closed) {
+                windowRefs[name] = window.open(url, name, "popup")
+            } else {
+                windowRefs[name].focus()
+            }
+        }
+
+        window.addEventListener('message', function (event) {
+            let data = event.data
+            console.log(data)
+        })
+    </script>
+</body>
+
+</html>
