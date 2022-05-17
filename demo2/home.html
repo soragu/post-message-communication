@@ -2,52 +2,133 @@
 <html>
 
 <head>
-    <title>Home Page</title>
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <title>Home Page</title>
+  <!-- 新 Bootstrap5 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+  <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+  <!-- <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script> -->
+  <link rel="stylesheet" type="text/css" href="cube.css">
 </head>
 
 <body>
-    <header class="d-flex justify-content-start py-3">
-      <ul class="nav nav-pills">
-        <li class="nav-item">
-            <a id="non-mro" href="#" class="nav-link" aria-current="page">non-MRO</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Eixt</a>
+          </li>
+          <li class="nav-item">
+            <a id="non-mro-menu-item" class="nav-link" href="#">Non-MRO</a>
+          </li>
+          <li class="nav-item">
+            <a id="other-item-menu-item" class="nav-link" href="#">Other</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Home</span>
+    </div>
+  </nav>
+  <div class="card" style="width: 18rem; float: right;">
+    <div id="non-mro-card" class="nav-list-card d-none">
+      <div class="card-header">
+        Non-MRO
+      </div>
+      <ul id="non-mro-group" class="list-group list-group-flush">
+        <li class="list-group-item">
+          <a href="#" onclick="openPopup('FolderTransfer.html', 'FolderTransfer')">
+            Folder Transfer(Individual)
+          </a>
         </li>
-        <li class="nav-item">
-            <a id="other" href="#" class="nav-link">Other</a>
+        <li class="list-group-item">
+          <a>Folder Transfer(Batch)</a>
         </li>
+        <li class="list-group-item">
+          <a>Cancel Folder Transfer</a></li>
       </ul>
-    </header>
+    </div>
+    <div id="other-card" class="nav-list-card d-none">
+      <div class="card-header">
+        Other
+      </div>
+      <ul id="other-group" class="list-group list-group-flush">
+        <li class="list-group-item">
+          <a href="#" onclick="openPopup('ChangeServiceType.html', 'ChangeServiceType')">
+            Change Service Type
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a>About MRTS</a>
+        </li>
+        <li class="list-group-item">
+          <a>Check Digit</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="cube">
+    <div class="top"></div>
+    <div class="bottom"></div>
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="after"></div>
+    <div class="before"></div>
+  </div>
+  <script>
+  window.name = 'home'
+  const windowRefs = {}
 
-    <script>
-        window.name = 'home'
-        const windowRefs = {}
-        let nonMROLink = document.getElementById('non-mro')
-        let otherLink = document.getElementById('other')
+  let nonMROMenuItem = document.getElementById('non-mro-menu-item')
+  let otherMenuItem = document.getElementById('other-item-menu-item')
 
-        nonMROLink.addEventListener('click', function () {
-            openPopup('non-mro.html', 'nonMRO')
-        })
+  let nonMROCard = document.getElementById('non-mro-card')
+  let otherCard = document.getElementById('other-card')
 
-        otherLink.addEventListener('click', function () {
-            openPopup('other.html', 'other')
-        })
+  let nonMROGroup = document.getElementById('non-mro-group')
+  let otherGroup = document.getElementById('other-group')
 
-        function openPopup(url, name) {
-            if (windowRefs[name] == null || windowRefs[name].closed) {
-                windowRefs[name] = window.open(url, name, "popup")
-            } else {
-                windowRefs[name].focus()
-            }
-        }
+  nonMROMenuItem.addEventListener('click', function() {
 
-        window.addEventListener('message', function (event) {
-            let data = event.data
-            console.log(data)
-        })
-    </script>
+    showNavCard(nonMROCard)
+  })
+
+  otherMenuItem.addEventListener('click', function() {
+    showNavCard(otherCard)
+  })
+
+  function showNavCard(element) {
+    let elements = document.querySelectorAll('.nav-list-card')
+    elements.forEach(el => {
+      el.classList.add('d-none')
+    })
+    element.classList.remove('d-none')
+  }
+
+  function openPopup(url, name) {
+    if (windowRefs[name] == null || windowRefs[name].closed) {
+      windowRefs[name] = window.open(url, name, "popup")
+    } else {
+      windowRefs[name].focus()
+    }
+  }
+
+  window.addEventListener('message', function(event) {
+    let data = event.data
+    if (data.action === 'nav') {
+      switch (data.type) {
+        case 'non-mro':
+          showNavCard(nonMROCard)
+          break;
+        case 'other':
+          showNavCard(otherCard)
+          break;
+      }
+    }
+  })
+  </script>
 </body>
 
 </html>

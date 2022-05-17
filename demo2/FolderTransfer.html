@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Folder Transfer(Individual)</title>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Eixt</a>
+          </li>
+          <li class="nav-item">
+            <a id="non-mro-menu-item" class="nav-link" href="#">Non-MRO</a>
+          </li>
+          <li class="nav-item">
+            <a id="other-item-menu-item" class="nav-link" href="#">Other</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Folder Transfer(Individual)</span>
+    </div>
+  </nav>
+  <script>
+  let nonMROMenuItem = document.getElementById('non-mro-menu-item')
+  let otherMenuItem = document.getElementById('other-item-menu-item')
+
+  nonMROMenuItem.addEventListener('click', function() {
+    openerFocus()
+    window.opener.postMessage({ action: 'nav', type: 'non-mro' })
+  })
+
+  otherMenuItem.addEventListener('click', function() {
+    openerFocus()
+    window.opener.postMessage({ action: 'nav', type: 'other' })
+  })
+
+  function openerFocus() {
+    let openerName = window.opener.name
+    window.open("javascript:;", openerName)
+  }
+  </script>
+</body>
+
+</html>
