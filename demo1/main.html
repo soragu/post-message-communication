@@ -31,7 +31,6 @@
                 windowRefs[name] = window.open(url, name, "popup")
             }
             else {
-                windowRefs[source] && windowRefs[source].blur()
                 windowRefs[name].focus()
             }
         }
@@ -39,7 +38,6 @@
         window.addEventListener('message', function (event) {
             let data = event.data
             if (data.type === 'focus') {
-                windowRefs[data.source].blur()
                 windowRefs[data.target].focus()
             }
             if (data.type === 'open') {

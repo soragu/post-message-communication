@@ -20,7 +20,6 @@
             function openPopup(url, name) {
                 if (windowRefs[name] == null || windowRefs[name].closed) {
                     if (window.opener) {
-                        window.blur()
                         window.opener.postMessage({ type: 'open', source: 'pageB', target: name, url }, '*')
                     } else {
                         windowRefs[name] = window.open(url, name, "popup")
