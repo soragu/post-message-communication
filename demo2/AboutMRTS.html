@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Folder Transfer(Individual)</title>
+  <title>About MRTS</title>
   <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
 </head>
 
@@ -26,7 +26,7 @@
   </nav>
   <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
-      <span class="navbar-brand mb-0 h1">Folder Transfer(Individual)</span>
+      <span class="navbar-brand mb-0 h1">About MRTS</span>
     </div>
   </nav>
   <script>
@@ -35,7 +35,7 @@
   let otherMenuItem = document.getElementById('other-item-menu-item')
 
   exitMenuItem.addEventListener('click', function() {
-    window.opener.postMessage({ action: 'close', type: 'FolderTransfer' })
+    window.opener.postMessage({ action: 'close', type: 'AboutMRTS' })
     window.close()
   })
 

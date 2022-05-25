@@ -35,6 +35,7 @@
   let otherMenuItem = document.getElementById('other-item-menu-item')
 
   exitMenuItem.addEventListener('click', function() {
+    window.opener.postMessage({ action: 'close', type: 'ChangeServiceType' })
     window.close()
   })
 

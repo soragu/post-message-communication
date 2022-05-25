@@ -45,10 +45,10 @@
           </a>
         </li>
         <li class="list-group-item">
-          <a>Folder Transfer(Batch)</a>
+          <a href="#" onclick="openPopup('FolderTransferB.html', 'FolderTransferB')">Folder Transfer(Batch)</a>
         </li>
         <li class="list-group-item">
-          <a>Cancel Folder Transfer</a></li>
+          <a  href="#" onclick="openPopup('CancelFolderTransfer.html', 'CancelFolderTransfer')">Cancel Folder Transfer</a></li>
       </ul>
     </div>
     <div id="other-card" class="nav-list-card d-none">
@@ -62,10 +62,13 @@
           </a>
         </li>
         <li class="list-group-item">
-          <a>About MRTS</a>
+          <a href="#" onclick="openPopup('AboutMRTS.html', 'AboutMRTS')">
+            About MRTS
+          </a>
         </li>
         <li class="list-group-item">
-          <a>Check Digit</a></li>
+          <a href="#" onclick="openPopup('CheckDigit.html', 'CheckDigit')">Check Digit</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -80,6 +83,7 @@
   <script>
   window.name = 'home'
   const windowRefs = {}
+  const MAX_WINDOWS_COUNT = 5
 
   let exitMenuItem = document.getElementById('exit-menu-item')
   let nonMROMenuItem = document.getElementById('non-mro-menu-item')
@@ -112,11 +116,25 @@
   }
 
   function openPopup(url, name) {
+    cleanClosedRefs()
+
     if (windowRefs[name] == null || windowRefs[name].closed) {
+      if (Object.keys(windowRefs).length >= MAX_WINDOWS_COUNT) {
+        alert(`你已打开了${MAX_WINDOWS_COUNT}个不同的窗口，请关闭部分窗口再尝试打开`)
+        return
+      }
       windowRefs[name] = window.open(url, name, "popup")
     } else {
       windowRefs[name].focus()
     }
+  }
+
+  function cleanClosedRefs() {
+    Object.keys(windowRefs).forEach(key =>{
+      if (windowRefs[key].closed) {
+        delete windowRefs[key]
+      }
+    })
   }
 
   window.addEventListener('message', function(event) {
@@ -130,6 +148,9 @@
           showNavCard(otherCard)
           break;
       }
+    }
+    if (data.action === 'close') {
+      windowRefs[data.type] && delete windowRefs[data.type]
     }
   })
   </script>
